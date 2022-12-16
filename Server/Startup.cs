@@ -1,4 +1,8 @@
 using System.Linq;
+using TechieTrading.Server.Data;
+using TechieTrading.Server.IRepository;
+using TechieTrading.Server.Models;
+using TechieTrading.Server.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,8 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TechieTrading.Server.Data;
-using TechieTrading.Server.Models;
 
 namespace TechieTrading.Server
 {
@@ -40,6 +42,8 @@ namespace TechieTrading.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

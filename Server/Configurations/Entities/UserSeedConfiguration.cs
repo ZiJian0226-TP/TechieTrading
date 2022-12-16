@@ -24,7 +24,7 @@ namespace TechieTrading.Server.Configurations.Entities
                 LastName = "Admin",
                 UserName = "Staff",
                 NormalizedUserName = "STAFF",
-                PasswordHash = hasher.HashPassword(null, "staff")
+                PasswordHash = hasher.HashPassword(null, "P@ssword1")
             },
             new ApplicationUser
             {
@@ -35,7 +35,7 @@ namespace TechieTrading.Server.Configurations.Entities
                 LastName = "Customer",
                 UserName = "Guest",
                 NormalizedUserName = "GUEST",
-                PasswordHash = hasher.HashPassword(null, "guest")
+                PasswordHash = hasher.HashPassword(null, "P@ssword1")
             }
             );
         }

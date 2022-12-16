@@ -1,0 +1,63 @@
+﻿@page "/TradeOrderItem/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">TradeOrderItem Profile</h3>
+
+@if (TradeOrderItems == null)
+{
+    <div class="alert alert-info">Loading TradeOrderItems...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Quantity</th>
+                <th>TradeOrderId</th>
+                <th>ProductId</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var TradeOrderItem in TradeOrderItems)
+            {
+                <tr>
+                    <td>@TradeOrderItem.Id</td>
+                    <td>
+                        <a href="/TradeOrderItems/view/@TradeOrderItem.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/TradeOrderItems/edit/@TradeOrderItem.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(TradeOrderItem.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    protected List<TradeOrderItem> TradeOrderItems;
+
+    protected async override Task OnInitializedAsync()
+    {
+        TradeOrderItems = await _client.GetFromJsonAsync<List<TradeOrderItem>>($"{Endpoints.TradeOrderItemEndpoint}");
+    }
+
+    async Task Delete(int TradeOrderItemId)
+    {
+        var TradeOrderItem = TradeOrderItems.First(q => q.Id == TradeOrderItemId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {TradeOrderItem.Id}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.TradeOrderItemEndpoint}/{TradeOrderItemId}");
+            await OnInitializedAsync();
+        }
+    }
+}
