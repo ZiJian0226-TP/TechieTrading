@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using TechieTrading.Server.Configurations.Entities;
+using TechieTrading.Server.Models;
+using TechieTrading.Shared.Domain;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using TechieTrading.Server.Configurations.Entities;
-using TechieTrading.Server.Models;
-using TechieTrading.Shared.Domain;
 
 namespace TechieTrading.Server.Data
 {
@@ -35,10 +31,10 @@ namespace TechieTrading.Server.Data
             builder.ApplyConfiguration(new CustomerSeedConfiguration());
             builder.ApplyConfiguration(new ProductSeedConfiguration());
             builder.ApplyConfiguration(new SellOrderSeedConfiguration());
-            //builder.ApplyConfiguration(new SellOrderItemSeedConfiguration());
+            builder.ApplyConfiguration(new SellOrderItemSeedConfiguration());
             builder.ApplyConfiguration(new StaffSeedConfiguration());
             builder.ApplyConfiguration(new TradeOrderSeedConfiguration());
-            //builder.ApplyConfiguration(new TradeOrderItemSeedConfiguration());
+            builder.ApplyConfiguration(new TradeOrderItemSeedConfiguration());
 
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new RoleSeedConfiguration());

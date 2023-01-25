@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TechieTrading.Shared.Domain
 {
@@ -12,6 +9,6 @@ namespace TechieTrading.Shared.Domain
         public int TradeOrderId { get; set; }
         public virtual TradeOrder TradeOrder { get; set; }
         public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual List<Product> Product { get; set; }
     }
 }

@@ -1,15 +1,13 @@
-﻿using TechieTrading.Server.Data;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using TechieTrading.Server.Data;
 using TechieTrading.Server.IRepository;
 using TechieTrading.Server.Models;
 using TechieTrading.Shared.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace TechieTrading.Server.Repository
 {

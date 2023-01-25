@@ -1,9 +1,20 @@
-﻿@page "/SellOrderItem/"
+﻿@page "/sellorderitems/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject NavigationManager _navManager
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
-<h3 class="card-title">SellOrderItem Profile</h3>
+<h3 class="card-title">SellOrderItem</h3>
+<br />
+
+<a href="/sellorderitems/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New SellOrderItem
+</a>
+<br />
+<br />
 
 @if (SellOrderItems == null)
 {
@@ -26,10 +37,10 @@ else
                 <tr>
                     <td>@SellOrderItem.Id</td>
                     <td>
-                        <a href="/SellOrderItems/view/@SellOrderItem.Id" class="btn btn-primary">
+                        <a href="/sellorderitems/view/@SellOrderItem.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/SellOrderItems/edit/@SellOrderItem.Id" class="btn btn-warning">
+                        <a href="/sellorderitems/edit/@SellOrderItem.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(SellOrderItem.Id))">
@@ -43,11 +54,12 @@ else
 }
 
 @code {
-    protected List<SellOrderItem> SellOrderItems;
+    private List<SellOrderItem> SellOrderItems;
 
     protected async override Task OnInitializedAsync()
     {
-        SellOrderItems = await _client.GetFromJsonAsync<List<SellOrderItem>>($"{Endpoints.SellOrderItemEndpoint}");
+        _interceptor.MonitorEvent();
+        SellOrderItems = await _client.GetFromJsonAsync<List<SellOrderItem>>($"{Endpoints.SellOrderItemsEndpoint}");
     }
 
     async Task Delete(int SellOrderItemId)
@@ -56,8 +68,12 @@ else
         var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {SellOrderItem.Id}?");
         if (confirm)
         {
-            await _client.DeleteAsync($"{Endpoints.SellOrderItemEndpoint}/{SellOrderItemId}");
+            await _client.DeleteAsync($"{Endpoints.SellOrderItemsEndpoint}/{SellOrderItemId}");
             await OnInitializedAsync();
         }
+    }
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }

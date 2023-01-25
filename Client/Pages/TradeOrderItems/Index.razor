@@ -1,9 +1,20 @@
-﻿@page "/TradeOrderItem/"
+﻿@page "/tradeorderitems/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject NavigationManager _navManager
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
-<h3 class="card-title">TradeOrderItem Profile</h3>
+<h3 class="card-title">TradeOrderItem</h3>
+<br />
+
+<a href="/tradeorderitems/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New TradeOrderItem
+</a>
+<br />
+<br />
 
 @if (TradeOrderItems == null)
 {
@@ -26,10 +37,10 @@ else
                 <tr>
                     <td>@TradeOrderItem.Id</td>
                     <td>
-                        <a href="/TradeOrderItems/view/@TradeOrderItem.Id" class="btn btn-primary">
+                        <a href="/tradeorderitems/view/@TradeOrderItem.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/TradeOrderItems/edit/@TradeOrderItem.Id" class="btn btn-warning">
+                        <a href="/tradeorderitems/edit/@TradeOrderItem.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(TradeOrderItem.Id))">
@@ -43,11 +54,12 @@ else
 }
 
 @code {
-    protected List<TradeOrderItem> TradeOrderItems;
+    private List<TradeOrderItem> TradeOrderItems;
 
     protected async override Task OnInitializedAsync()
     {
-        TradeOrderItems = await _client.GetFromJsonAsync<List<TradeOrderItem>>($"{Endpoints.TradeOrderItemEndpoint}");
+        _interceptor.MonitorEvent();
+        TradeOrderItems = await _client.GetFromJsonAsync<List<TradeOrderItem>>($"{Endpoints.TradeOrderItemsEndpoint}");
     }
 
     async Task Delete(int TradeOrderItemId)
@@ -56,8 +68,12 @@ else
         var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {TradeOrderItem.Id}?");
         if (confirm)
         {
-            await _client.DeleteAsync($"{Endpoints.TradeOrderItemEndpoint}/{TradeOrderItemId}");
+            await _client.DeleteAsync($"{Endpoints.TradeOrderItemsEndpoint}/{TradeOrderItemId}");
             await OnInitializedAsync();
         }
+    }
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }

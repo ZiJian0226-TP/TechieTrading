@@ -1,9 +1,7 @@
-﻿using TechieTrading.Shared.Domain;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
+using TechieTrading.Shared.Domain;
+using Microsoft.AspNetCore.Http;
 
 namespace TechieTrading.Server.IRepository
 {

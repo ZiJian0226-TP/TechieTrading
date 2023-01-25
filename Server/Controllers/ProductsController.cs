@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TechieTrading.Server.Data;
+﻿using System.Threading.Tasks;
 using TechieTrading.Shared.Domain;
 using TechieTrading.Server.IRepository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace TechieTrading.Server.Controllers
 {

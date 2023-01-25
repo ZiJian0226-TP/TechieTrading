@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
 using TechieTrading.Shared.Domain;
 
 namespace TechieTrading.Server.Configurations.Entities
 {
     public class StaffSeedConfiguration : IEntityTypeConfiguration<Staff>
     {
-        public void Configure(EntityTypeBuilder<Staff> builder)
+        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Staff> builder)
         {
             builder.HasData(
                 new Staff

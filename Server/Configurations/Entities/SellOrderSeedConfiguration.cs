@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TechieTrading.Shared.Domain;
 
 namespace TechieTrading.Server.Configurations.Entities
 {
     public class SellOrderSeedConfiguration : IEntityTypeConfiguration<SellOrder>
     {
-        public void Configure(EntityTypeBuilder<SellOrder> builder)
+        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<SellOrder> builder)
         {
             builder.HasData(
                 new SellOrder

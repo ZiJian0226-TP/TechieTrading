@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace TechieTrading.Shared.Domain
 {
     public class TradeOrder : BaseDomainModel
     {
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
         public DateTime OrderTime { get; set; }
         public string DeliveryType { get; set; }
@@ -15,5 +15,6 @@ namespace TechieTrading.Shared.Domain
         public virtual Staff Staff { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
+        public List<TradeOrderItem> TradeOrderItem { get; set; }
     }
 }

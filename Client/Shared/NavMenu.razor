@@ -1,4 +1,10 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">TechieTrading</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -15,7 +21,7 @@
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All">
+                    <NavLink class="nav-link" href="#" @onclick="BeginSignOut" Match="NavLinkMatch.All">
                         <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
                     </NavLink>
                 </li>
@@ -39,37 +45,37 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Staff">
+            <NavLink class="nav-link" href="Staffs">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Staff
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Customer">
+            <NavLink class="nav-link" href="Customers">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Customer
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Product">
+            <NavLink class="nav-link" href="Products">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Product
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="TradeOrder">
+            <NavLink class="nav-link" href="TradeOrders">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Trade Order
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="SellOrder">
+            <NavLink class="nav-link" href="SellOrders">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Sell Order
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="TradeOrderItem">
+            <NavLink class="nav-link" href="TradeOrderItems">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Trade Order Item
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="SellOrderItem">
+            <NavLink class="nav-link" href="SellOrderItems">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Sell Order Item
             </NavLink>
         </li>
@@ -84,5 +90,11 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
     }
 }

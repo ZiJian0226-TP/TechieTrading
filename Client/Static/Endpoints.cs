@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TechieTrading.Client.Static
+﻿namespace TechieTrading.Client.Static
 {
     public static class Endpoints
     {
         private static readonly string Prefix = "api";
 
-        public static readonly string CustomerEndpoint = $"{Prefix}/Customer";
-        public static readonly string ProductEndpoint = $"{Prefix}/Product";
-        public static readonly string SellOrderEndpoint = $"{Prefix}/SellOrder";
-        public static readonly string SellOrderItemEndpoint = $"{Prefix}/SellOrderItem";
-        public static readonly string StaffEndpoint = $"{Prefix}/Staff";
-        public static readonly string TradeOrderEndpoint = $"{Prefix}/TradeOrder";
-        public static readonly string TradeOrderItemEndpoint = $"{Prefix}/TradeOrderItem";
+        public static readonly string CustomersEndpoint = $"{Prefix}/customers";
+        public static readonly string ProductsEndpoint = $"{Prefix}/products";
+        public static readonly string SellOrdersEndpoint = $"{Prefix}/sellorders";
+        public static readonly string SellOrderItemsEndpoint = $"{Prefix}/sellorderitems";
+        public static readonly string StaffsEndpoint = $"{Prefix}/staffs";
+        public static readonly string TradeOrdersEndpoint = $"{Prefix}/tradeorders";
+        public static readonly string TradeOrderItemsEndpoint = $"{Prefix}/tradeorderitems";
     }
 }
