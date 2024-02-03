@@ -1,0 +1,13 @@
+﻿@page "/products/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>View Product</h3>
+<FormComponent product="product" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    Product product = new Product();
+    protected async override Task OnParametersSetAsync()
+    {
+        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{id}");
+    }
+}

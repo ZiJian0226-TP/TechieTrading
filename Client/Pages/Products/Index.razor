@@ -1,0 +1,87 @@
+﻿@page "/products/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject NavigationManager _navManager
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<h3 class="card-title">Products</h3>
+<br />
+
+<a href="/products/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Product
+</a>
+<br />
+<br />
+
+@if (Products == null)
+{
+    <div class="alert alert-info">Loading Products...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>ManufactureDate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Product in Products)
+            {
+                <tr>
+                    <td>@Product.Name</td>
+                    <td>@Product.Description</td>
+                    <td>@Product.Type</td>
+                    <td>@Product.Quantity</td>
+                    <td>@Product.Price</td>
+                    <td>@Product.ManufactureDate</td>
+                    <td>
+                        <a href="/products/view/@Product.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/products/edit/@Product.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(Product.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Product> Products;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+    }
+
+    async Task Delete(int ProductId)
+    {
+        var Product = Products.First(q => q.Id == ProductId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Product.Name}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.ProductsEndpoint}/{ProductId}");
+            await OnInitializedAsync();
+        }
+    }
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
+}
